@@ -3,21 +3,16 @@
 // The tree has four rows of Neopixels (12, 10, 8, and 5) and an RGB star.
 // The largest row has the first pixel.
 
+
 #include "FastLED.h"
 FASTLED_USING_NAMESPACE
 #if defined(FASTLED_VERSION) && (FASTLED_VERSION < 3001000)
 #warning "Requires FastLED 3.1 or later; check github for latest code."
 #endif
 
-
 // Global Variables
-const int RED_PIN = 4;
-const int GREEN_PIN = 3;
-const int BLUE_PIN = 2;
 //uncomment this line if using a Common Anode LED (connect to +5V)
 #define COMMON_ANODE
-
-int starColor;
 
 // Global variables for FastLED with Neopixels
 #define DATA_PIN    5
@@ -30,14 +25,10 @@ CRGB leds[NUM_LEDS];
 #define BRIGHTNESS          16
 #define FRAMES_PER_SECOND  120
 
+// prep RGB star
+//LedWheel star(4, 3, 2, 0); // create star, a member of LEDWheel
 
 void setup() {
-  // prep RGB star
-  pinMode(RED_PIN, OUTPUT);
-  pinMode(GREEN_PIN, OUTPUT);
-  pinMode(BLUE_PIN, OUTPUT);
-  setColor(128, 128, 128);
-
   delay(3000); // 3 second delay for recovery
   
   // tell FastLED about the LED strip configuration
@@ -47,7 +38,6 @@ void setup() {
   // set master brightness control
   FastLED.setBrightness(BRIGHTNESS);
   fadeToBlackBy( leds, NUM_LEDS, 20);
-  setColor(128, 0, 128);
 }
 
 
@@ -73,29 +63,21 @@ void loop()
   EVERY_N_MILLISECONDS( 20 ) { gHue++; } // slowly cycle the "base color" through the rainbow
   EVERY_N_SECONDS( 10 ) { 
     nextPattern(); // change patterns periodically
-    starColor = (starColor + 1) % 6;
-    switch (starColor) {
-      case 0: setColor(128, 0, 0); break; // red
-      case 1: setColor(128, 128, 0); break; // yellow
-      case 2: setColor(0,128,0); break;  // green
-      case 3: setColor(0,128,128); break; // aqua
-      case 4: setColor(0,0,128); break;  // blue
-      case 5: setColor(128,0,128); break; // purple
+    // star.update();
     }
   }
-}
 
 
-void setColor(int red, int green, int blue)
+void setLedColor(int red, int green, int blue)
 {
   #ifdef COMMON_ANODE
     red = 255 - red;
     green = 255 - green;
     blue = 255 - blue;
   #endif
-  analogWrite(RED_PIN, red);
-  analogWrite(GREEN_PIN, green);
-  analogWrite(BLUE_PIN, blue);  
+  analogWrite(2, red);
+  analogWrite(3, green);
+  analogWrite(4, blue);  
 }
 
 
