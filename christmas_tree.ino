@@ -3,7 +3,7 @@
 // The tree has four rows of Neopixels (12, 10, 8, and 5) and an RGB star.
 // The largest row has the first pixel.
 
-
+#include "LedWheel.h"
 #include "FastLED.h"
 FASTLED_USING_NAMESPACE
 #if defined(FASTLED_VERSION) && (FASTLED_VERSION < 3001000)
@@ -26,7 +26,7 @@ CRGB leds[NUM_LEDS];
 #define FRAMES_PER_SECOND  120
 
 // prep RGB star
-//LedWheel star(4, 3, 2, 0); // create star, a member of LEDWheel
+LedWheel star(4, 3, 2, 0); // create star, a member of LEDWheel
 
 void setup() {
   delay(3000); // 3 second delay for recovery
@@ -63,7 +63,7 @@ void loop()
   EVERY_N_MILLISECONDS( 20 ) { gHue++; } // slowly cycle the "base color" through the rainbow
   EVERY_N_SECONDS( 10 ) { 
     nextPattern(); // change patterns periodically
-    // star.update();
+    star.Update();
     }
   }
 

@@ -1,23 +1,6 @@
-class LedWheel {
-// Rotates led through color wheel
+#include "LedWheel.h"
 
-// Changes to next color each time called
-
-private:
-// Params, initialized at startup
-  int redPin;
-  int greenPin;
-  int bluePin;
-
-// State variables
-  int currentColor; // 0 to 5
-
-public:
-  LedWheel(int setRedPin, int setGreenPin, int setBluePin, int setColor);
-  void Update();
-};
-
-  LedWheel::LedWheel(int setRedPin, int setGreenPin, int setBluePin, int setColor) {
+LedWheel::LedWheel(int setRedPin, int setGreenPin, int setBluePin, int setColor) {
   // Constructor; inits vars and state
 
     redPin = setRedPin;
@@ -45,5 +28,4 @@ public:
       case 5: setLedColor(128,0,128); break; // purple
     }
   }
-
 
