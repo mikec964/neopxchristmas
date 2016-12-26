@@ -32,6 +32,12 @@ CRGB leds[NUM_LEDS];
 
 
 void setup() {
+  // prep RGB star
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
+  setColor(128, 128, 128);
+
   delay(3000); // 3 second delay for recovery
   
   // tell FastLED about the LED strip configuration
@@ -40,20 +46,18 @@ void setup() {
 
   // set master brightness control
   FastLED.setBrightness(BRIGHTNESS);
-
-  // prep RGB star
-  pinMode(RED_PIN, OUTPUT);
-  pinMode(GREEN_PIN, OUTPUT);
-  pinMode(BLUE_PIN, OUTPUT);  
+  fadeToBlackBy( leds, NUM_LEDS, 20);
+  setColor(128, 0, 128);
 }
 
 
 // List of patterns to cycle through.  Each is defined as a separate function below.
 typedef void (*SimplePatternList[])();
-SimplePatternList gPatterns = { rainbow, rainbowWithGlitter, confetti, sinelon, juggle, bpm };
+//SimplePatternList gPatterns = { rainbow, rainbowWithGlitter, confetti, sinelon, juggle, bpm };
+SimplePatternList gPatterns = { sinelon, confetti, juggle, bpm };
 uint8_t gCurrentPatternNumber = 2; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
-  
+
 
 void loop()
 {
@@ -80,6 +84,7 @@ void loop()
     }
   }
 }
+
 
 void setColor(int red, int green, int blue)
 {
